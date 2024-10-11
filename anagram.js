@@ -125,7 +125,7 @@ function shuffle() {
 	out += '<div>O</div>'.replace('O',option.join(''));
     }
     out += '</div>';
-    document.getElementById('anagram-output').innerHTML = out;
+    return out;
     
 }
 
