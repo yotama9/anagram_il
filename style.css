@@ -3,7 +3,6 @@
     position: absolute;
     top: 10%;
     left: 50%;
-    transform: translate(-50%, -50%);
     text-align: center;
 }
 
@@ -25,6 +24,10 @@ body {
 
 h1{
     font-size:2em;
+}
+
+.single_character_field{
+    width:0.9em;
 }
 
 
