@@ -1,11 +1,10 @@
 document.addEventListener("DOMContentLoaded", function() {
     console.log("The page has finished loading!");
-    shuffle();
+    update_character_field();
+    //shuffle();
 });
 
 document.getElementById('generate').addEventListener('click', function() {
-
-
     const anagram = shuffle(characters,structure);
     document.getElementById('anagram-output').innerHTML = anagram;
 });
@@ -25,14 +24,14 @@ function update_character_field(){
 	    a_field = a_field.replaceAll('NUM', counter);
 	    counter += 1
 	    character_fields.push(a_field);
-	    
 	}
 	character_fields.push('<span class="empty_space"> </span>');
     }
-    document.getElementById("characters_fields").innerHTML = character_fields.reverse().join("");
+    document.getElementById("characters_fields").innerHTML = character_fields.join("");
 }
 
 function update_c_input(c_id){
+    //used to make sure that in each field there is only one character and that it is not in the end-of-word form
     let elem = document.getElementById("c_fieldNUM".replace('NUM',c_id));
     let str = elem.value;
     let c = str.substr(-1).replace("ץ","צ").replace("ף","פ").replace("ן","נ").replace("ם","מ").replace("ך","כ");
@@ -75,6 +74,17 @@ function combine_perm_with_constraints(perm,constraints){
     let loc_in_word = 0;
     let word_order = 0;
     let word_length = 0;
+    let out2 = perm.slice();
+    for (c of constraints){
+	out2.splice(c[1],0,c[0]);
+    }
+    for (s of structure[0]){
+	out2.splice(loc +s + word_order,0,' ');
+	loc += s + word_order;
+	word_order += 1;
+    }
+    return(out2);
+    
     for (item of perm){
 	out.push(item)
 	loc += 1;
@@ -101,18 +111,16 @@ function combine_perm_with_constraints(perm,constraints){
 
 function shuffle() {
     let characters = document.getElementById('characters').value;
-
     let constraints = get_constraints();
     //cleanign out mess
-    characters = characters.replace(' ','');
+    characters = characters.replaceAll(' ','');
     characters = characters.replaceAll('ם','מ').replaceAll("ן","נ").replaceAll("ך","כ").replaceAll("ץ","צ").replaceAll("ף","פ");
     for (constraint of constraints){
-	console.log(characters.includes(c),c,characters);
+	c = constraint[0];
 	if (!characters.includes(c)){
 	    msg = "אותיות קבועות לא מתאימות לטקסט המקורי"; 
 	    return msg;
 	}
-	c = constraint[0];
 	characters = characters.replace(c,'');
     }
     
