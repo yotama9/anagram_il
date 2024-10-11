@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Anagram Generator</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+<body class="centered">
+  <h1>מחשבון אנגרמות</h1>
+  <div>
+    <input type="text" id="characters" placeholder="Enter characters..." >
+  </div>
+  <div>
+    <input type="text" id="structure" placeholder="Enter word sequence..."  oninput="update_character_field()">
+  </div>
+  <div>
+    <button id="generate">אנגרם לי</button>
+  </div>
+  <div id="characters_fields">
+    <span></span>
+  </div>
+  <div id="anagram-output"></div>
+
+  <script src="anagram.js"></script>
+  <div class="msg">
+    Developed by Yotam Yosef Avital who is not(!) a professional programmer
+  </div>
+  <div class="msg">
+    If you have an idea, contact me at yotama9 at gmail
+  </div>
+</body>
+</html>
