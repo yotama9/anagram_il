@@ -51,7 +51,8 @@ h1{
   }
 
   .centered{
-      top: 12%;
+      top: 2em;
+      text-align:center;
   }
 }
 
