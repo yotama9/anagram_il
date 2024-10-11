@@ -9,33 +9,36 @@
     }
   </style>
 </head>
-<body class="centered">
-  <h1>מחשבון אנגרמות</h1>
-  <div>
-    <input type="text" id="characters" placeholder="Enter characters..." >
-  </div>
-  <div>
-    <input type="text" id="structure" placeholder="Enter word sequence..."  oninput="update_character_field()">
-  </div>
-  <div>
-    <button id="generate">אנגרם לי</button>
-  </div>
-  <div id="characters_fields">
-    <span></span>
-  </div>
-  <div id="anagram-output"></div>
+<body>
+  <div class='centered'>
+    <h1>מחשבון אנגרמות</h1>
+    <div>
+      <input type="text" id="characters" placeholder="הכנס טקסט" >
+    </div>
+    <div>
+      <input type="text" id="structure" placeholder="מבנה התשובה"  oninput="update_character_field()">
+    </div>
+    <div>
+      <button id="generate">אנגרם לי</button>
+    </div>
+    <div id="characters_fields">
+      <span></span>
+    </div>
+    <div id="anagram-output"></div>
 
-  <script src="anagram.js"></script>
-  <div></div>
-  <div></div>
-  <div>Version: 0.1</div>
-  <div></div>
-  
-  <div class="msg">
-    Developed by Yotam Yosef Avital who is not(!) a professional programmer
+    <script src="anagram.js"></script>
+    <div></div>
+    <div></div>
+    <div>גירסא: 0.1.2</div>
+    <div></div>
   </div>
-  <div class="msg">
-    If you have an idea, contact me at yotama9 at gmail
-  </div>
+
+  <div class="footer">
+    <div>
+      Developed by Yotam Yosef Avital who is not(!) a professional programmer
+    </div>
+    <div>
+      If you have an idea, contact me at yotama9 at gmail
+    </div>
 </body>
 </html>

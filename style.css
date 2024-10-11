@@ -6,10 +6,42 @@
     transform: translate(-50%, -50%);
     text-align: center;
 }
+
+.footer{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 20px;
+    font-size: 0.8em;
+    text-align:center;
+    direction: ltr;
+}
+
+
+body {
+    font-size:16px;
+    direction: rtl;
+}
+
+h1{
+    font-size:2em;
+}
+
+
 	
-@media only screen and (max-width: 768px) {
+@media all and (max-width: 1000px) {
   /* select all elements */
   * {
-    font-size: 30px; /* set font size to 18px for smartphones */
+    font-size: 1.4em; /* set font size to 18px for smartphones */
+  }
+
+  .centered{
+      top: 12%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  div {
+    background-color: lightblue;
   }
 }
