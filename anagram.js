@@ -9,6 +9,13 @@ document.getElementById('generate').addEventListener('click', function() {
     document.getElementById('anagram-output').innerHTML = anagram;
 });
 
+function characters_input_updated(){
+    let characters = document.getElementById("characters").value;
+    characters = characters.replaceAll(" ","");
+    document.getElementById("structure").value = characters.length
+    update_character_field()
+}
+
 function update_character_field(){
     let structure = get_structure();
     structure = get_structure();
