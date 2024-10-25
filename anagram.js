@@ -1,6 +1,28 @@
+let words_list = []
+
 document.addEventListener("DOMContentLoaded", function() {
     console.log("The page has finished loading!");
     update_character_field();
+    
+    Papa.parse("./data/strings.csv",{
+	download:true,
+	header:false,
+	complete: function(results) {
+	    let row_number = 0;
+	    const header_length = 2;
+	    for (result of results.data.slice(2)){
+		if (row_number < header_length){
+		    row_number += 1;
+		    continue;
+		}
+		words_list.push(result[0])
+	    }
+	    console.log("loaded srings list");
+	},
+	error: function (error){
+	    console.log("error loading word list: ", error);
+	}
+    });
     //shuffle();
 });
 
@@ -73,6 +95,43 @@ function get_constraints(){
     return out
 }
 
+function check_if_word_in_sting_list(characters_in){
+    parts = characters_in.join('').split(' ');
+    for (part of parts){
+	part = part.replace(/מ$/,'ם').replace(/כ/,'ך').replace(/נ/,'ן').replace(/צ/,'ץ').replace(/פ/,'ף');
+	if (!words_list.includes(part)){
+	    return false;
+	}
+    }
+    //we are suposed to be here only if all parts are in the list 
+    return true
+
+}
+
+function switch_to_end_character(character_in){
+    switch(character_in){
+    case 'פ':
+	return 'ף';
+	break
+    case 'מ':
+	return 'ם';
+	break;
+    case 'צ':
+	return 'ץ';
+	break;
+    case 'כ':
+	return 'ך';
+	break;
+    case 'נ':
+	return 'ן';
+	break;
+    default:
+	return character_in
+	
+    }
+    
+}
+
 function combine_perm_with_constraints(perm,constraints){
     let structure = get_structure();
     let length = structure[1]
@@ -88,32 +147,13 @@ function combine_perm_with_constraints(perm,constraints){
     for (s of structure[0]){
 	out2.splice(loc +s + word_order,0,' ');
 	loc += s + word_order;
+	out2[loc-1] = switch_to_end_character(out2[loc-1]);
 	word_order += 1;
+	if (word_order == structure[0].length-1){p
+	    break;
+	}
     }
     return(out2);
-    
-    for (item of perm){
-	out.push(item)
-	loc += 1;
-	loc_in_word += 1;
-	for (constraint of constraints){
-	    //check if we reached one of the constraints given by the user
-	    if (constraint[1] == loc){
-		//we did, let's add
-		out.push(constraint[0]);
-		loc += 1;//and move forward the location by one for "free"
-		loc_in_word += 1;
-	    }
-	}
-	//now we are checking if we are at the end of the word
-	if (loc_in_word == structure[0][word_order]){
-	    //it's the end of the word. Reset counters and push a whitespace
-	    word_order += 1
-	    loc_in_word = 0;
-	    out.push(' ');
-	}
-    }
-    return (out);
 }
 
 function shuffle() {
@@ -130,16 +170,32 @@ function shuffle() {
 	}
 	characters = characters.replace(c,'');
     }
+
+    //checking that the message is not too long
+    if (characters.length > 8){
+	let msg = "יש יותר מ8 אותיות לחיפוש שהן יותר מ40,000 אפשרויות. אנה הזן אותיות ידועות.";
+	return msg;
+
+    }
+    console.log(constraints,constraints.length);
     
     characters = characters.split('');
     let length = characters.length;
     let permutations = permute(characters,length);
-    out = '<div>'
+    let existing_words = '<div>'
+    let non_existing_words = '<div>'
     for (p of permutations){
-	option = combine_perm_with_constraints(p,constraints);
-	out += '<div>O</div>'.replace('O',option.join(''));
+	let option = combine_perm_with_constraints(p,constraints);
+	let is_word_exists = check_if_word_in_sting_list(option)
+	option = option.join('');
+	if (is_word_exists){
+	    existing_words += '<div>O</div>'.replace('O',option);
+	} else {
+	    non_existing_words += '<div>O</div>'.replace('O',option);
+	}
     }
-    out += '</div>';
+    let out = '<h3>אפשריות עם מילים שנמצאו</h3>' + existing_words + '</div>';
+    out += '<h3>אפשרויות נוספות</h3>' + non_existing_words + '</div>';
     return out;
     
 }
